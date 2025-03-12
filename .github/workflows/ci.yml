@@ -87,6 +87,6 @@ jobs:
             sudo docker pull emsp-account-token-service
 
             # Run the new container
-            sudo docker run -d --name emsp-account-token-service-c--restart unless-stopped -p 8080:8080 emsp-account-token-service:latest
+            sudo docker run -d --name emsp-account-token-service-c --restart unless-stopped -p 8080:8080 emsp-account-token-service:latest
           EOF
 

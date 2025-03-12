@@ -46,7 +46,7 @@ jobs:
           docker images --format '{{.Repository}}:{{.Tag}}' | grep 'crpi-9m1xqmjsfr2dw5sp.ap-northeast-1.personal.cr.aliyuncs.com/emsp-service/yzy_emsp' | xargs -I {} docker rmi -f {}
 
       - name: Build Docker image
-        run: docker build -f .github/workflows/Dockerfile -t emsp-account-token-service .github/workflows/
+        run: docker build -f .github/workflows/dockerfile -t emsp-account-token-service .github/workflows/
 
       - name: Tag Docker image
         run: docker tag emsp-account-token-service:latest $ALIYUN_REGISTRY/$ALIYUN_REPOSITORY:latest

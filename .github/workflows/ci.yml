@@ -87,6 +87,6 @@ jobs:
             sudo docker pull crpi-9m1xqmjsfr2dw5sp.ap-northeast-1.personal.cr.aliyuncs.com/emsp-service/yzy_emsp:latest
 
             # Run the new container
-            sudo docker run -d --name emsp-account-token-service-c --restart unless-stopped -p 8080:8080 crpi-9m1xqmjsfr2dw5sp.ap-northeast-1.personal.cr.aliyuncs.com/emsp-service/yzy_emsp:latest
+            sudo docker run -d --name emsp-account-token-service-c --network my-network --restart unless-stopped -p 8080:8080 crpi-9m1xqmjsfr2dw5sp.ap-northeast-1.personal.cr.aliyuncs.com/emsp-service/yzy_emsp:latest
           EOF
 

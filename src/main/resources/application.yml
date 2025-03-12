@@ -1,0 +1,63 @@
+spring:
+  profiles:
+    active: dev
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:30001/emsp?useSSL=false&serverTimezone=UTC
+    username: root
+    password: HUAru@2023!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+
+  springfox:
+    documentation:
+      enabled: true
+      title: "eMSP Account Token Service API"
+      description: "Spring Boot RESTful API for Account Token Management"
+      version: "1.0.0"
+      contact:
+        name: "Your Name"
+        url: "https://your-website.com"
+        email: "your-email@example.com"
+
+  # 端口配置
+  server:
+    port: 8080
+
+
+  logging:
+    level:
+      root: DEBUG
+      com.baomidou.mybatisplus: debug
+      org.mybatis: debug
+      com.zaxxer.hikari: debug
+      org.springframework.jdbc: debug
+
+
+
+
+
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-handlers-package: com.yzy.config
+  map-underscore-to-camel-case: true
+  default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+

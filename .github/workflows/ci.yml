@@ -82,7 +82,7 @@ jobs:
           
             # Remove the specific Docker image
             sudo docker rmi -f emsp-account-token-service
-
+            sudo docker login --username=${{ secrets.DOCKER_USERNAME }} crpi-9m1xqmjsfr2dw5sp.ap-northeast-1.personal.cr.aliyuncs.com --password=${{ secrets.DOCKER_PASSWORD }}
             # Pull the new Docker image
             sudo docker pull emsp-account-token-service
 

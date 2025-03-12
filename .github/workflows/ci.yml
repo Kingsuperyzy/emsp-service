@@ -49,10 +49,10 @@ jobs:
         run: docker build -f .github/workflows/dockerfile -t emsp-account-token-service .github/workflows/
 
       - name: Tag Docker image
-        run: docker tag emsp-account-token-service:latest $ALIYUN_REGISTRY/$ALIYUN_REPOSITORY:latest
+        run: docker tag emsp-account-token-service:latest crpi-9m1xqmjsfr2dw5sp.ap-northeast-1.personal.cr.aliyuncs.com/emsp-service/yzy_emsp:latest
 
       - name: Push Docker image to Aliyun registry
-        run: docker push $ALIYUN_REGISTRY/$ALIYUN_REPOSITORY:latest
+        run: docker push crpi-9m1xqmjsfr2dw5sp.ap-northeast-1.personal.cr.aliyuncs.com/emsp-service/yzy_emsp:latest
 
       # 设置 AWS CLI
       - name: Set up AWS CLI

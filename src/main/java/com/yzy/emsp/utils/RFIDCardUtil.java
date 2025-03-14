@@ -27,7 +27,7 @@ public class RFIDCardUtil {
         // Convert to hexadecimal string
         StringBuilder hexUID = new StringBuilder();
         for (byte b : uid) {
-            hexUID.append(String.format("%02X ", b));
+            hexUID.append(String.format("%02X", b));
         }
         return hexUID.toString().trim();
     }

@@ -45,7 +45,7 @@ public class CardController {
     })
     public Result<CardVO> updateCardStatus(
             @PathVariable Integer cardId,
-            @RequestParam @ApiParam(value = "Status", allowableValues = "0, 2, 3") Integer status) {
+            @RequestParam @ApiParam(value = "Status", allowableValues = "0, 1, 2, 3") Integer status) {
         CardStatus cardStatus = CardStatus.fromCode(status);
         CardVO cardVO = cardService.updateCardStatus(cardId, cardStatus);
         return Result.success(cardVO);

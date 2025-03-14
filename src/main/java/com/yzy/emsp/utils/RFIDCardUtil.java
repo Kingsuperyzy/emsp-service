@@ -7,29 +7,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class RFIDCardUtil {
 
-    // Prefix for visible ID
-    private static final String PREFIX = "EV";
-    // Atomic counter for sequential numbering (could be replaced with database persistence)
-    private static final AtomicInteger counter = new AtomicInteger(1);
     // Cryptographically secure random number generator
     private static final SecureRandom random = new SecureRandom();
 
+    private static final byte MANUFACTURER_CODE = (byte) 0xE0; // Example: NXP manufacturer code
+
     /**
-     * Generate visible ID with format: EV-YYYYMM-000001
-     * Format breakdown:
-     * - Prefix: EV
-     * - Date: Current year and month (yyyyMM)
-     * - Sequence: 6-digit incremental number
+     * Generates an 8-byte VisibleId (Unique Identifier).
      *
-     * @return Formatted visible ID string
+     * @return A formatted UID string in hexadecimal representation.
      */
     public static String generateVisibleId() {
-        // Get current year and month in "yyyyMM" format
-        String datePart = new SimpleDateFormat("yyyyMM").format(new Date());
-        // Get and increment sequence number atomically
-        int uniqueNumber = counter.getAndIncrement();
-        // Format: Prefix-Date-Sequence (6-digit zero-padded)
-        return String.format("%s-%s-%06d", PREFIX, datePart, uniqueNumber);
+        byte[] uid = new byte[8];
+
+        uid[0] = MANUFACTURER_CODE; // First byte: Manufacturer code
+        random.nextBytes(uid); // Generate random bytes
+        uid[0] = MANUFACTURER_CODE; // Ensure the first byte is always the manufacturer code
+
+        // Convert to hexadecimal string
+        StringBuilder hexUID = new StringBuilder();
+        for (byte b : uid) {
+            hexUID.append(String.format("%02X ", b));
+        }
+        return hexUID.toString().trim();
     }
 
     /**

@@ -67,12 +67,12 @@ jobs:
         run: |
           echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
+
       # 使用 SSH 连接到 EC2 实例并执行命令
       - name: SSH into EC2 and deploy
         run: |
           ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@${{ secrets.EC2_INSTANCE_IP }} <<EOF
           # 更新系统          
-
             # Stop and remove old container
             sudo docker ps -q -f "name=emsp-account-token-service-c" | xargs -r sudo docker stop
             sudo docker ps -aq -f "name=emsp-account-token-service-c" | xargs -r sudo docker rm

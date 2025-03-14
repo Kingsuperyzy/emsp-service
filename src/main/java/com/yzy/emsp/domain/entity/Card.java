@@ -8,13 +8,16 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
+
 @ApiModel(" Card Entity")
 @TableName("ev_card")
 public class Card {
+    @Id
     @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "Card ID", example = "1")
     private Integer id;
@@ -31,6 +34,14 @@ public class Card {
     @TableField("user_id")
     @ApiModelProperty("Bound User ID")
     private Integer userId;
+
+    @TableField(exist = false)
+    @ApiModelProperty("Bound User Name")
+    private Integer userName;
+
+    @TableField(exist = false)
+    @ApiModelProperty("Contract ID")
+    private String contractId;
 
 
     @TableField(value = "card_type")
@@ -139,5 +150,21 @@ public class Card {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getUserName() {
+        return userName;
+    }
+
+    public void setUserName(Integer userName) {
+        this.userName = userName;
+    }
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
     }
 }

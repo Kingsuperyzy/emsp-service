@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+
 @ApiModel("Account Entity")
 @TableName("ev_account")
 public class Account {
@@ -19,9 +20,9 @@ public class Account {
     private Integer id;
 
     @TableField("username")
-    @ApiModelProperty(value = "Username", required = true, example = "user123")
+    @ApiModelProperty(value = "userName", required = true, example = "user123")
     @NotBlank(message = "Username cannot be empty")
-    private String username;
+    private String userName;
 
     @TableField("password")
     @ApiModelProperty(value = "Password", required = true, example = "password123")
@@ -70,12 +71,12 @@ public class Account {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {

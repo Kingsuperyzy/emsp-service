@@ -1,5 +1,6 @@
 package com.yzy.emsp.domain.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yzy.emsp.domain.entity.Card;
 import io.swagger.annotations.ApiModel;
@@ -15,7 +16,7 @@ public class CardVO {
     @ApiModelProperty(value = "Card ID", example = "1")
     private Integer id;
 
-    @ApiModelProperty(value = "Card Number", example = "100001")
+    @ApiModelProperty(value = "Visible Number", example = "EV-YYYYMM-000001")
     private String cardNumber;
 
     @ApiModelProperty(value = "Unique Identifier", example = "550e8400-e29b-41d4-a716-446655440000")
@@ -44,6 +45,12 @@ public class CardVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "Update Time", example = "2023-07-20 15:05:00")
     private Date updateTime;
+
+    @ApiModelProperty("Bound User Name")
+    private Integer userName;
+
+    @ApiModelProperty("Contract ID")
+    private String contractId;
 
 
     public Integer getId() {
@@ -124,6 +131,22 @@ public class CardVO {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getUserName() {
+        return userName;
+    }
+
+    public void setUserName(Integer userName) {
+        this.userName = userName;
+    }
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
     }
 
     // 添加静态转换方法

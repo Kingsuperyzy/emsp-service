@@ -8,6 +8,7 @@ import com.yzy.emsp.domain.CardStatus;
 import com.yzy.emsp.domain.dto.CardDTO;
 import com.yzy.emsp.domain.entity.Account;
 import com.yzy.emsp.domain.entity.Card;
+import com.yzy.emsp.domain.query.CardQuery;
 import com.yzy.emsp.domain.vo.CardVO;
 import com.yzy.emsp.exception.BusinessException;
 import com.yzy.emsp.mapper.AccountMapper;
@@ -124,15 +125,10 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
         Page<Card> pageParam = new Page<>(page, size);
 
         // 2. Query cards updated after the specified time
-        LambdaQueryWrapper<Card> wrapper = new LambdaQueryWrapper<>();
-        if (startTime != null && endTime != null) {
-            wrapper.between(Card::getUpdateTime, startTime, endTime);
-        } else if (startTime != null) {
-            wrapper.ge(Card::getUpdateTime, startTime);
-        } else if (endTime != null) {
-            wrapper.le(Card::getUpdateTime, endTime);
-        }
-        IPage<Card> cardPage = baseMapper.selectPage(pageParam, wrapper);
+        CardQuery cardQuery = new CardQuery();
+        cardQuery.setStartTime(startTime);
+        cardQuery.setEndTime(endTime);
+        IPage<Card> cardPage = baseMapper.selectCardPage(pageParam, cardQuery);
 
         // 3. Convert entities to VOs
         List<CardVO> cardVOs = cardPage.getRecords().stream()

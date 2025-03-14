@@ -14,8 +14,8 @@ public class AccountVO {
     @ApiModelProperty(value = "Account ID", example = "1")
     private Integer id;
 
-    @ApiModelProperty(value = "Username", example = "user123")
-    private String username;
+    @ApiModelProperty(value = "userName", example = "user123")
+    private String userName;
 
     @ApiModelProperty(value = "Contract ID")
     private String contractId;
@@ -33,6 +33,7 @@ public class AccountVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "Update Time", example = "2023-07-20 15:05:00")
     private Date updateTime;
+
 
     // 添加静态转换方法
     public static AccountVO fromEntity(Account account) {
@@ -60,12 +61,12 @@ public class AccountVO {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getContractId() {
@@ -99,4 +100,5 @@ public class AccountVO {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
 }

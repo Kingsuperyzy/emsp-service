@@ -6,8 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel("Account Create Request")
 public class AccountDTO {
-    @ApiModelProperty(value = "Username", required = true)
-    private String username;
+    @ApiModelProperty(value = "UserName", required = true)
+    private String UserName;
 
     @ApiModelProperty(value = "Password", required = true)
     private String password;
@@ -18,12 +18,12 @@ public class AccountDTO {
     @ApiModelProperty(value = "Email", required = true)
     private String email;
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return UserName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        UserName = userName;
     }
 
     public String getPassword() {

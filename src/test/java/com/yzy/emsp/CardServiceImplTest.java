@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yzy.emsp.domain.CardStatus;
 import com.yzy.emsp.domain.entity.Account;
 import com.yzy.emsp.domain.entity.Card;
+import com.yzy.emsp.domain.query.CardQuery;
 import com.yzy.emsp.domain.vo.CardVO;
 import com.yzy.emsp.exception.BusinessException;
 import com.yzy.emsp.mapper.AccountMapper;
@@ -12,6 +13,7 @@ import com.yzy.emsp.mapper.CardMapper;
 import com.yzy.emsp.service.impl.CardServiceImpl;
 import com.yzy.emsp.utils.PageResult;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -88,18 +90,42 @@ public class CardServiceImplTest {
     // ------------------------- Pagination Query -------------------------
     @Test
     void searchByUpdateTime_WithStartTimeOnly_ShouldApplyFilter() {
+        // 1. Mock data preparation
         IPage<Card> mockPage = new Page<>();
         mockPage.setRecords(Collections.singletonList(new Card()));
-        when(cardMapper.selectPage(any(), any())).thenReturn(mockPage);
+        mockPage.setTotal(1L);
 
-        Date start = new Date(System.currentTimeMillis() - 10000);
-        PageResult<CardVO> result = cardService.searchByUpdateTime(start, null, 1, 10);
+        // 2. Argument captor
+        ArgumentCaptor<Page<Card>> pageCaptor = ArgumentCaptor.forClass(Page.class);
+        ArgumentCaptor<CardQuery> queryCaptor = ArgumentCaptor.forClass(CardQuery.class);
 
-        verify(cardMapper).selectPage(
-            argThat(page -> page.getCurrent() == 1),
-            argThat(wrapper -> wrapper.getEntity() == null)
+        // 3. Set up mock behavior
+        when(cardMapper.selectCardPage(any(Page.class), any(CardQuery.class))).thenReturn(mockPage);
+
+        // 4. Execute test
+        Date startTime = new Date(System.currentTimeMillis() - 10000);
+        PageResult<CardVO> result = cardService.searchByUpdateTime(startTime, null, 1, 10);
+
+        // 5. Verify invocation arguments
+        verify(cardMapper).selectCardPage(pageCaptor.capture(), queryCaptor.capture());
+
+        // Verify pagination parameters
+        Page<Card> capturedPage = pageCaptor.getValue();
+        assertAll(
+                () -> assertEquals(1, capturedPage.getCurrent()),
+                () -> assertEquals(10, capturedPage.getSize())
         );
+
+        // Verify query conditions
+        CardQuery capturedQuery = queryCaptor.getValue();
+        assertAll(
+                () -> assertEquals(startTime, capturedQuery.getStartTime()),
+                () -> assertNull(capturedQuery.getEndTime())
+        );
+
+        // 6. Verify result
         assertEquals(1, result.getItems().size());
+        assertEquals(1, result.getTotalItems());
     }
 
 

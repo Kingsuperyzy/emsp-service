@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@ApiModel(" Card Create Request")
+@ApiModel("Card Create Request")
 public class CardDTO {
     /*@ApiModelProperty(value = "Card number(Visible Number)", required = true, example = "EV-202503-000001")
     private String cardNumber;

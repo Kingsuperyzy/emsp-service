@@ -2,13 +2,10 @@ FROM ubuntu:20.04
 
 WORKDIR /app
 
-# 将从 Maven 构建的 JAR 文件复制到容器
 COPY emsp-service-1.0.0.jar /app/emsp-service-1.0.0.jar
-# 安装 JDK 8，确保容器中可以运行 Java 应用
+
 RUN apt-get update && apt-get install -y openjdk-8-jdk
 
-# 暴露 Java 应用端口
 EXPOSE 8080
 
-# 启动 MySQL 和 Java 应用服务
 CMD  java -jar /app/emsp-service-1.0.0.jar

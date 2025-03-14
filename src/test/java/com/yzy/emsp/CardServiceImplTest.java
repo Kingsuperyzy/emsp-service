@@ -59,7 +59,7 @@ public class CardServiceImplTest {
 
         BusinessException ex = assertThrows(BusinessException.class,
             () -> cardService.updateCardStatus(1, CardStatus.DEACTIVATED));
-        assertTrue(ex.getMessage().contains("ASSIGNED"));
+        assertTrue(ex.getMessage().equals("The current status does not allow changes."));
     }
 
     // ------------------------- Card Assignment -------------------------

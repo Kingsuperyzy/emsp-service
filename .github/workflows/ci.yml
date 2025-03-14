@@ -54,7 +54,6 @@ jobs:
       - name: Push Docker image to Aliyun registry
         run: docker push crpi-9m1xqmjsfr2dw5sp.ap-northeast-1.personal.cr.aliyuncs.com/emsp-service/yzy_emsp:latest
 
-      # 设置 AWS CLI
       - name: Set up AWS CLI
         run: |
           aws --version
@@ -62,17 +61,14 @@ jobs:
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set region ${{ secrets.AWS_REGION }}
 
-      # 复制 SSH 私钥用于 SSH 连接
       - name: Set up SSH key
         run: |
           echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
 
-      # 使用 SSH 连接到 EC2 实例并执行命令
       - name: SSH into EC2 and deploy
         run: |
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@${{ secrets.EC2_INSTANCE_IP }} <<EOF
-          # 更新系统          
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@${{ secrets.EC2_INSTANCE_IP }} <<EOF          
             # Stop and remove old container
             sudo docker ps -q -f "name=emsp-account-token-service-c" | xargs -r sudo docker stop
             sudo docker ps -aq -f "name=emsp-account-token-service-c" | xargs -r sudo docker rm

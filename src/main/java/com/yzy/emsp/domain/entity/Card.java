@@ -37,7 +37,7 @@ public class Card {
 
     @TableField(exist = false)
     @ApiModelProperty("Bound User Name")
-    private Integer userName;
+    private String userName;
 
     @TableField(exist = false)
     @ApiModelProperty("Contract ID")
@@ -152,11 +152,11 @@ public class Card {
         this.updateTime = updateTime;
     }
 
-    public Integer getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(Integer userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 

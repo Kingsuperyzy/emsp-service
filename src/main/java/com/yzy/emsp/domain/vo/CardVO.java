@@ -47,7 +47,7 @@ public class CardVO {
     private Date updateTime;
 
     @ApiModelProperty("Bound User Name")
-    private Integer userName;
+    private String userName;
 
     @ApiModelProperty("Contract ID")
     private String contractId;
@@ -133,11 +133,11 @@ public class CardVO {
         this.updateTime = updateTime;
     }
 
-    public Integer getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(Integer userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 

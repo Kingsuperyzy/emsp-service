@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 // CardServiceImpl.java
 @Service
 public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
-    implements CardService {
+        implements CardService {
 
     @Autowired
     private AccountMapper accountMapper;
@@ -120,7 +120,7 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
     }
 
     @Override
-    public PageResult<CardVO> searchByUpdateTime(Date startTime,Date endTime, int page, int size) {
+    public PageResult<CardVO> searchByUpdateTime(Date startTime, Date endTime, int page, int size) {
         // 1. Create a pagination object
         Page<Card> pageParam = new Page<>(page, size);
 
@@ -154,10 +154,7 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card>
     private void validateStatusTransition(CardStatus currentStatus, CardStatus newStatus) {
         switch (currentStatus) {
             case CREATED:
-                if (newStatus != CardStatus.ASSIGNED) {
-                    throw new BusinessException("Only ASSIGNED status is allowed from CREATED");
-                }
-                break;
+                throw new BusinessException("The current status does not allow changes.");
             case ASSIGNED:
                 if (newStatus != CardStatus.ACTIVATED && newStatus != CardStatus.DEACTIVATED) {
                     throw new BusinessException("Only ACTIVATED or DEACTIVATED status is allowed from ASSIGNED");

@@ -19,7 +19,7 @@ public class Account {
     @ApiModelProperty(value = "Account ID", example = "1")
     private Integer id;
 
-    @TableField("username")
+    @TableField("user_name")
     @ApiModelProperty(value = "userName", required = true, example = "user123")
     @NotBlank(message = "Username cannot be empty")
     private String userName;

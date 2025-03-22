@@ -1,14 +1,14 @@
-package com.yzy.emsp.utils;
+package com.yzy.emsp.domain.model.account;
 
 import java.util.Random;
 import java.util.regex.Pattern;
 
 /**
- * Utility class for generating and validating EMAID (e-Mobility Account Identifier)
- * based on ISO 15118 and Hubject Plug and Charge standards.
+ * EMAID (e-Mobility Account Identifier) value object.
+ * Based on ISO 15118 and Hubject Plug and Charge standards.
  */
-public class EMAIDUtil {
-    
+public final class EMAID {
+
     // Standardized EMAID pattern (No separators, uppercase, 14 or 15 characters)
     private static final Pattern STANDARDIZED_PATTERN = Pattern.compile("^[A-Z]{2}[\\dA-Z]{3}[\\dA-Z]{9}[\\dA-Z]?$");
 
@@ -20,12 +20,39 @@ public class EMAIDUtil {
     private static final String PROVIDER_IDS = "ABCXYZLMNOPQ"; // Example provider IDs
     private static final Random RANDOM = new Random();
 
+    private final String value;
+
+    /**
+     * Private constructor to enforce immutability.
+     *
+     * @param value The EMAID value.
+     * @throws IllegalArgumentException If the EMAID format is invalid.
+     */
+    private EMAID(String value) {
+        if (!isValidEMAID(value)) {
+            throw new IllegalArgumentException("Invalid EMAID format");
+        }
+        this.value = normalizeEMAID(value);
+    }
+
+    /**
+     * Creates an EMAID from a string value.
+     *
+     * @param value The EMAID value.
+     * @return An EMAID instance.
+     * @throws IllegalArgumentException If the EMAID format is invalid.
+     */
+    public static EMAID of(String value) {
+        return new EMAID(value);
+    }
+
     /**
      * Generates a random EMAID in standardized format.
+     *
      * @param includeCheckDigit Whether to include an optional check digit.
-     * @return Generated EMAID string.
+     * @return A new EMAID instance.
      */
-    public static String generateEMAID(boolean includeCheckDigit) {
+    public static EMAID generate(boolean includeCheckDigit) {
         String country = getRandomCountryCode();
         String provider = getRandomProviderID();
         String instance = getRandomInstanceID();
@@ -34,11 +61,12 @@ public class EMAIDUtil {
         if (includeCheckDigit) {
             emaid += calculateCheckDigit(emaid);
         }
-        return emaid;
+        return new EMAID(emaid);
     }
 
     /**
      * Validates if the given EMAID matches the standardized format or optional format.
+     *
      * @param emaid The EMAID to validate.
      * @return True if valid, false otherwise.
      */
@@ -48,10 +76,11 @@ public class EMAIDUtil {
 
     /**
      * Normalizes an EMAID by removing hyphens and converting to uppercase.
+     *
      * @param emaid The EMAID to normalize.
      * @return Normalized EMAID.
      */
-    public static String normalizeEMAID(String emaid) {
+    private static String normalizeEMAID(String emaid) {
         if (emaid == null) {
             return null;
         }
@@ -61,6 +90,7 @@ public class EMAIDUtil {
     /**
      * Calculates a simple check digit for EMAID.
      * Uses a basic mod-36 checksum based on ASCII values.
+     *
      * @param emaid The EMAID (without check digit).
      * @return Calculated check digit (single character).
      */
@@ -74,6 +104,7 @@ public class EMAIDUtil {
 
     /**
      * Generates a random 2-letter country code.
+     *
      * @return Random country code.
      */
     private static String getRandomCountryCode() {
@@ -83,6 +114,7 @@ public class EMAIDUtil {
 
     /**
      * Generates a random 3-character provider ID.
+     *
      * @return Random provider ID.
      */
     private static String getRandomProviderID() {
@@ -95,6 +127,7 @@ public class EMAIDUtil {
 
     /**
      * Generates a random 9-character instance ID (alphanumeric).
+     *
      * @return Random instance ID.
      */
     private static String getRandomInstanceID() {
@@ -105,5 +138,31 @@ public class EMAIDUtil {
         return sb.toString();
     }
 
+    /**
+     * Returns the EMAID value.
+     *
+     * @return The EMAID value.
+     */
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EMAID emaid = (EMAID) o;
+        return value.equals(emaid.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 
 }

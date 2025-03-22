@@ -21,6 +21,8 @@
         <maven.compiler.source>1.8</maven.compiler.source> <!-- 1.8 Java version for compatibility -->
         <maven.compiler.target>1.8</maven.compiler.target>
         <mockito.version>3.12.4</mockito.version>
+        <p6spy.version>3.9.0</p6spy.version>
+        <guava.version>29.0-jre</guava.version>
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -76,7 +78,22 @@
         </dependency>
 
 
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- Logging SQL queries and performance tuning -->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>${p6spy.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
 
 
 
@@ -117,7 +134,7 @@
             </plugin>
 
             <!-- Maven Compiler Plugin -->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -136,7 +153,7 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>

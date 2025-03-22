@@ -1,16 +1,9 @@
-package com.yzy.emsp.controller;
+package com.yzy.emsp;
 
-import com.yzy.emsp.domain.CardStatus;
-import com.yzy.emsp.domain.CardType;
-import com.yzy.emsp.domain.dto.CardAssignDTO;
-import com.yzy.emsp.domain.dto.CardDTO;
-import com.yzy.emsp.domain.vo.CardVO;
-import com.yzy.emsp.service.CardService;
-import com.yzy.emsp.utils.PageResult;
-import com.yzy.emsp.utils.Result;
+
+import com.yzy.emsp.application.CardService;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,11 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Date;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -43,7 +32,7 @@ public class CardControllerTest {
 
         mockMvc.perform(post("/api/cards")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"balance\":0,\"cardType\":0,\"issueDate\":\"2023-07-20 15:00:00\"}"))
+                        .content("{\"balance\":1.00,\"cardType\":0,\"issueDate\":\"2025-03-22 15:00:00\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("200"));
     }
@@ -55,7 +44,7 @@ public class CardControllerTest {
 
         mockMvc.perform(put("/api/cards/assign")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"cardId\":1,\"userId\":1}"))
+                        .content("{\"cardNo\":\"E0AE5C309F5283AC\",\"userNo\":\"1742601692549-abc\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value(200))
                 .andExpect(jsonPath("$.message").value("Operation succeeded"));
@@ -66,7 +55,7 @@ public class CardControllerTest {
        // CardVO cardVO = new CardVO();
         //when(cardService.updateCardStatus(anyInt(), any(CardStatus.class))).thenReturn(cardVO);
 
-        mockMvc.perform(put("/api/cards/1/status")
+        mockMvc.perform(put("/api/cards/E0CFA875660DCB1D/status")
                         .param("status", "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value(200));
@@ -79,7 +68,7 @@ public class CardControllerTest {
 
         mockMvc.perform(get("/api/cards/search")
                         .param("startTime", "2025-03-10 15:00:00")
-                        .param("endTime", "2025-03-11 15:00:00")
+                        .param("endTime", "2025-03-22 15:00:00")
                         .param("page", "1")
                         .param("size", "10"))
                 .andExpect(status().isOk())

@@ -100,7 +100,6 @@ public class Card {
     public static Card of(CreateCardCommand command) {
 
         checkArgument(!StringUtils.isEmpty(command.getBalance()), "Balance cannot be empty");
-        checkArgument(command.getBalance().compareTo(BigDecimal.ZERO) > 0, "Balance cannot be negative");
         checkArgument(!StringUtils.isEmpty(command.getCardType()), "CardType cannot be empty");
         String uid = RFIDCardUtil.generateUID();
         CardNumber newCardNo = CardNumber.of(RFIDCardUtil.generateVisibleId());

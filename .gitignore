@@ -44,3 +44,8 @@ nbdist/
 !*/build/*.java
 !*/build/*.html
 !*/build/*.xml
+
+######################################################################
+# Large binaries (too big for git; kept as split zip parts instead)
+src/solution.Msix
+src/solution.zip

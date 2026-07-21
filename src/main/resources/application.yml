@@ -62,8 +62,25 @@ spring:
 #      id-type: auto
 #      logic-delete-value: 1
 #      logic-not-delete-value: 0
-#  mapper-locations: classpath:mappers/*.xml我想我一开始可能弄错了需求了，我们的需求是  要构建一个读取confluence 的agent ，这个agent 可以向人一样分析页面，首先页面正文说明了这个页面的具体内容，表格里记录了一些数据，我们要从正文里知道这个页面的业务内容是什么，根据正文内容我们可以判断哪些表格或表格里的哪些内容是我们关心的，下边我以实际页面举例：
-1 foss页面：正文里说明了这个页面记录的是什么内容，表格里记录的是汇总信息，那agent就可以判断只需要从汇总表里拿到我关心的业务线的内容即可
-2 GRAS 页面 ：正文记录了3个指标的业务含义，而下边的tap 页里记录的各个日期的不同指标下的一些统计数据，这个页面只分析表格、或只分析正文都不行，要按结构顺序相互呼应才能理解我们需要哪些数据、或表格里的数据代表什么
-而我们要做的agent 就是要想人一样能理解页面内容，并安装我们的要求去抽取汇总数据，例如只关心我自己的Service Line（Data Assets&Provisioning Tech）和指定app 的内容
+#  mapper-locations: classpath:mappers/*.xml
+请继续维护此仓库。开始前完整阅读 README.md、
+docs/current-system-guide.md、docs/implementation-plan.md、
+docs/architecture-decisions.md、docs/public-test-corpus.md。
 
+这是一个 KCI & GRAS Confluence Page Intelligence Agent。
+工作树可能包含未提交修改；必须保留，禁止 git reset --hard、
+git checkout -- 或覆盖无关文件。
+
+当前已完成：增量采集、Page IR、Azure OpenAI 受约束页面理解、
+Review Queue、附件重析、确定性 Extraction Plan 执行、
+metric_observations/current_actions MongoDB 持久化。
+下一优先项：真实内网 Confluence/Azure shadow run、人工附件重析后自动恢复事实执行、
+变化事件和日报。
+
+
+RESILIENCE_MONGODB_URI
+RESILIENCE_MONGODB_DATABASE
+AZURE_OPENAI_ENDPOINT
+AZURE_OPENAI_API_KEY
+AZURE_OPENAI_DEPLOYMENT
+CONFLUENCE_BEARER_TOKEN
